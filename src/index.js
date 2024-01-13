@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // GET
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.redirect("https://praise-project.vercel.app/");
 });
 
 // POST

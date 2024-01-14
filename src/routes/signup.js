@@ -28,6 +28,16 @@ const signup = async (req, res) => {
 
   const auth = getAuth(app);
   try {
+    if (role === "teacher") {
+      const schoolData = await Schools.findOne({ token, _id: name });
+      if (!schoolData)
+        return failed(
+          "School not found",
+          "You don't have access to this school",
+          404
+        );
+    }
+
     await createUserWithEmailAndPassword(auth, email, password);
 
     if (role === "school") {

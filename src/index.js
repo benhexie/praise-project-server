@@ -4,6 +4,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { signup } = require("./routes/signup");
 const { login } = require("./routes/login");
+const { authToken } = require("./middleware/authToken");
+const { getData } = require("./routes/getData");
+const { getSchools } = require("./routes/getSchools");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.redirect("https://praise-project.vercel.app/");
 });
+app.get("/data", authToken, getData);
+app.get("/schools", getSchools);
 
 // POST
 app.post("/auth/signup", signup);

@@ -19,8 +19,8 @@ app.get("/", (req, res) => {
 });
 
 // POST
-app.post("/signup", signup);
-app.post("/login", login);
+app.post("/auth/signup", signup);
+app.post("/auth/login", login);
 
 const listener = app.listen(PORT, () => {
   console.log(`Server is running on port ${listener.address().port}`);

@@ -34,13 +34,23 @@ const login = async (req, res) => {
 
     await Users.updateOne(
       { _id: userData._id },
-      { lastLogin: Date.now(), password }
+      { lastLogin: Date.now(), password, reason }
     );
     return success("User logged in", {
       token: genToken({ id: userData._id }),
     });
   } catch (error) {
     console.log(error.message);
+    if (error.code === "auth/wrong-password")
+      return failed("Login failed", "Wrong password", 400);
+    if (error.code === "auth/invalid-credential")
+      return failed("Login failed", "Incorrect email or password", 400);
+    if (error.code === "auth/user-not-found")
+      return failed("Login failed", "User not found", 404);
+    if (error.code === "auth/invalid-email")
+      return failed("Login failed", "Invalid email", 400);
+    if (error.code === "auth/too-many-requests")
+      return failed("Login failed", "Too may attempts. Try again later", 400);
     return failed("Internal server error", "Internal server error", 500);
   }
 };

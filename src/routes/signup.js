@@ -24,27 +24,28 @@ const signup = async (req, res) => {
   let token = req.body.token;
 
   const errors = inputErrors(req.body);
-  if (!errors.length) return failed("Signup failed", errors.join("\n"));
+  if (errors.length) return failed("Signup failed", errors.join("\n"));
 
-  if (role === "school") {
-    const schoolData = await Schools.create({
-      name,
-      address,
-      email,
-    });
-    token = schoolData.token;
-    school = schoolData._id;
-  }
-
-  role = role === "school" ? "admin" : "user";
   const auth = getAuth(app);
   try {
     await createUserWithEmailAndPassword(auth, email, password);
+
+    if (role === "school") {
+      const schoolData = await Schools.create({
+        name,
+        address,
+        email,
+      });
+      token = schoolData.token;
+      school = schoolData._id;
+    }
+
+    role = role === "school" ? "admin" : "user";
     await Users.create({
       email,
+      password,
       firstname,
       lastname,
-      username,
       role,
       school,
       token,
@@ -64,6 +65,7 @@ function inputErrors({
   password,
   token,
   school,
+  address,
 }) {
   let errors = [];
   if (!firstname) errors.push("First name is required.");
@@ -84,8 +86,6 @@ function inputErrors({
   if (!password) errors.push("Password is required.");
   if (password && password.length < 8)
     errors.push("Password must be at least 8 characters.");
-  if (!confirm) errors.push("Confirm password is required.");
-  if (password !== confirm) errors.push("Password does not match.");
   if (role === "teacher" && !school) errors.push("School is required.");
   if (role === "teacher" && !token) errors.push("Token is required.");
   if (role === "school" && !school) errors.push("School is required.");

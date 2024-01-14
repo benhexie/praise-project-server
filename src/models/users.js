@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Token is required"],
     },
-    reasons: {
+    reason: {
       type: String,
       trim: true,
       required: [true, "Reason for login is required"],

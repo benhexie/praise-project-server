@@ -11,10 +11,9 @@ const login = async (req, res) => {
   const { success, failed } = new Response(res);
   const email = req.body.email?.trim();
   const password = req.body.password;
-  const reason = req.body.reason;
   const auth = getAuth(app);
 
-  const errors = inputErrors({ email, password, reason });
+  const errors = inputErrors({ email, password });
   if (errors.length) return failed("Login failed", errors.join("\n"));
 
   try {
@@ -34,7 +33,7 @@ const login = async (req, res) => {
 
     await Users.updateOne(
       { _id: userData._id },
-      { lastLogin: Date.now(), password, reason }
+      { lastLogin: Date.now(), password }
     );
     return success("User logged in", {
       token: genToken({ id: userData._id }),
@@ -55,11 +54,10 @@ const login = async (req, res) => {
   }
 };
 
-function inputErrors({ email, password, reason }) {
+function inputErrors({ email, password }) {
   const errors = [];
   if (!email) errors.push("Email is required");
   if (!password) errors.push("Password is required");
-  if (!reason) errors.push("Reason for login is required");
   return errors;
 }
 

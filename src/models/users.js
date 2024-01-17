@@ -34,12 +34,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Token is required"],
     },
-    reason: {
-      type: String,
-      trim: true,
-      required: [true, "Reason for login is required"],
-      default: "User hasn't logged in yet",
-    },
     password: {
       type: String,
       required: [true, "Password is required"],

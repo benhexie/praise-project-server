@@ -1,3 +1,5 @@
+const Professionals = require("../models/professionals");
+const Schools = require("../models/schools");
 const Users = require("../models/users");
 const Response = require("../utils/response");
 
@@ -12,7 +14,15 @@ const getData = async (req, res) => {
         if (!userData) return failed("User not found", "User not found", 404);
         data.user = userData.toObject();
 
-        return success("User data", data);
+        // get school
+        const schoolData = await Schools.findOne({ _id: userData.school });
+        if (!schoolData) return failed("School not found", "School not found", 404);
+        data.school = schoolData.toObject();
+
+        const professionalData = await Professionals.findOne({ user: id });
+        data.professional = professionalData?.toObject() || {};
+
+        return success("User data retrieved successfully", data);
     } catch (error) {
         console.log(error.message);
         return failed("Internal server error", "Internal server error", 500);

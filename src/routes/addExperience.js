@@ -30,6 +30,9 @@ const addExperience = async (req, res) => {
       current,
     };
 
+    if (!(await Users.findOne({ _id: id })))
+      return failed("Education not added", "User not found", 404);
+
     const professionalData = await Professionals.findOneAndUpdate(
       { user: id },
       { $push: { experience } },

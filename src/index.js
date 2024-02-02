@@ -12,6 +12,7 @@ const { changeToken } = require("./routes/changeToken");
 const { addExperience } = require("./routes/addExperience");
 const { addEducation } = require("./routes/addEducation");
 const { addCatalog } = require("./routes/addCatalog");
+const { updateUser } = require("./routes/updateUser");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,6 +39,10 @@ app.post("/auth/login", login);
 app.post("/api/profile/experience", authToken, addExperience);
 app.post("/api/profile/education", authToken, addEducation);
 app.post("/api/profile/catalog", upload.single("image"), authToken, addCatalog);
+
+// PUT
+// edit profile info
+app.put("/user", authToken, updateUser);
 
 const listener = app.listen(PORT, () => {
   console.log(`Server is running on port ${listener.address().port}`);

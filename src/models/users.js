@@ -40,6 +40,14 @@ const userSchema = new mongoose.Schema(
       minlength: [8, "Password must be at least 8 characters long"],
       trim: true,
     },
+    age: {
+      type: Number,
+      min: 18,
+      max: 200,
+    },
+    origin: String,
+    nationality: String,
+    phone: String,
     lastLogin: {
       type: Date,
       default: Date.now(),

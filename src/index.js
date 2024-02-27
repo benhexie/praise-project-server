@@ -13,6 +13,10 @@ const { addExperience } = require("./routes/addExperience");
 const { addEducation } = require("./routes/addEducation");
 const { addCatalog } = require("./routes/addCatalog");
 const { updateUser } = require("./routes/updateUser");
+const { addCourse } = require("./routes/addCourse");
+const { updateUserImage } = require("./routes/updateUserImage");
+const verifyAdmin = require("./middleware/verifyAdmin");
+const { updateCourse } = require("./routes/updateCourse");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -39,10 +43,14 @@ app.post("/auth/login", login);
 app.post("/api/profile/experience", authToken, addExperience);
 app.post("/api/profile/education", authToken, addEducation);
 app.post("/api/profile/catalog", upload.single("image"), authToken, addCatalog);
+app.post("/course", authToken, verifyAdmin, addCourse);
 
 // PUT
-// edit profile info
 app.put("/user", authToken, updateUser);
+app.put("/course", authToken, verifyAdmin, updateCourse);
+
+// PATCH
+app.patch("/user/image", upload.single("image"), authToken, updateUserImage);
 
 const listener = app.listen(PORT, () => {
   console.log(`Server is running on port ${listener.address().port}`);

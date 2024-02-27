@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
+    image: {
+      type: String,
+    },
     firstname: {
       type: String,
       required: [true, "First name is required"],
@@ -55,7 +58,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Users = mongoose.model("Users", userSchema);

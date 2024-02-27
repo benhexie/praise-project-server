@@ -98,7 +98,7 @@ const professionalSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Professionals = mongoose.model("Professionals", professionalSchema);

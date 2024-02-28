@@ -18,6 +18,7 @@ const { updateUserImage } = require("./routes/updateUserImage");
 const verifyAdmin = require("./middleware/verifyAdmin");
 const { updateCourse } = require("./routes/updateCourse");
 const { forgotPassword } = require("./routes/forgotPassword");
+const { disableUser } = require("./routes/disableUser");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,6 +54,7 @@ app.put("/course", authToken, verifyAdmin, updateCourse);
 
 // PATCH
 app.patch("/user/image", upload.single("image"), authToken, updateUserImage);
+app.patch("/user/:id", authToken, verifyAdmin, disableUser);
 
 const listener = app.listen(PORT, () => {
   console.log(`Server is running on port ${listener.address().port}`);

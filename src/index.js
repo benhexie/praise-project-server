@@ -17,6 +17,7 @@ const { addCourse } = require("./routes/addCourse");
 const { updateUserImage } = require("./routes/updateUserImage");
 const verifyAdmin = require("./middleware/verifyAdmin");
 const { updateCourse } = require("./routes/updateCourse");
+const { forgotPassword } = require("./routes/forgotPassword");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +41,7 @@ app.get("/token", authToken, changeToken);
 // POST
 app.post("/auth/signup", signup);
 app.post("/auth/login", login);
+app.post("/auth/forgot-password", forgotPassword);
 app.post("/api/profile/experience", authToken, addExperience);
 app.post("/api/profile/education", authToken, addEducation);
 app.post("/api/profile/catalog", upload.single("image"), authToken, addCatalog);

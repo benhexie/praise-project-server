@@ -26,14 +26,14 @@ const getData = async (req, res) => {
       data.courses = coursesData.map((course) => course.toObject());
 
       // get lecturers
-      const lecturersData = await Users.find({
+      const staffsData = await Users.find({
         school: userData.school,
-        role: "user",
+        role: "staff",
       });
-      data.lecturers = lecturersData.map((lecturer) => lecturer.toObject());
+      data.staffs = staffsData.map((staff) => staff.toObject());
     }
 
-    if (userData.role === "user") {
+    if (userData.role === "staff") {
       // get portfolio
       const professionalData = await Professionals.findOne({ user: id });
       data.professional = professionalData?.toObject() || {};

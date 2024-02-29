@@ -15,15 +15,17 @@ const courseSchema = new mongoose.Schema({
     required: true,
   },
   description: {
-    type: String,
+    type: String || null,
+    default: null,
   },
   credits: {
     type: Number,
     required: true,
   },
   assignedTo: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId || null,
     ref: "User",
+    default: null,
   },
 });
 

@@ -7,9 +7,9 @@ const updateCourse = async (req, res) => {
   const id = req.data.id;
   const code = req.body.code;
   const title = req.body.title;
-  const description = req.body.description || "";
+  const description = req.body.description || null;
   const credits = req.body.credits;
-  const assignedTo = req.body.assignedTo || "";
+  const assignedTo = req.body.assignedTo || null;
 
   try {
     const userData = await Users.findOne({ _id: id }, { school: 1 });
@@ -21,9 +21,9 @@ const updateCourse = async (req, res) => {
       code,
       title,
       credits,
+      description,
+      assignedTo,
     };
-    if (description) courseData.description = description;
-    if (assignedTo) courseData.assignedTo = assignedTo;
 
     const course = await Courses.findOneAndUpdate(
       { school, code },

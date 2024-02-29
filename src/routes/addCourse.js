@@ -6,9 +6,9 @@ const addCourse = async (req, res) => {
   const { failed, success } = new Response(res);
   const code = req.body.code;
   const title = req.body.title;
-  const description = req.body.description || "";
+  const description = req.body.description || null;
   const credits = req.body.credits;
-  const assignedTo = req.body.assignedTo || "";
+  const assignedTo = req.body.assignedTo || null;
   const id = req.data.id;
 
   try {
@@ -21,9 +21,9 @@ const addCourse = async (req, res) => {
       code,
       title,
       credits,
+      description,
+      assignedTo,
     };
-    if (description) courseData.description = description;
-    if (assignedTo) courseData.assignedTo = assignedTo;
 
     const course = new Courses(courseData);
     await course.save();

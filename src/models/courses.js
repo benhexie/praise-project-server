@@ -9,14 +9,17 @@ const courseSchema = new mongoose.Schema({
   code: {
     type: String,
     required: true,
+    trim: true,
   },
   title: {
     type: String,
     required: true,
+    trim: true,
   },
   description: {
     type: String || null,
     default: null,
+    trim: true,
   },
   credits: {
     type: Number,

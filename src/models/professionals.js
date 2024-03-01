@@ -11,14 +11,17 @@ const professionalSchema = new mongoose.Schema(
         company: {
           type: String,
           required: true,
+          trim: true,
         },
         title: {
           type: String,
           required: true,
+          trim: true,
         },
         location: {
           type: String,
           required: true,
+          trim: true,
         },
         from: {
           type: Date,
@@ -29,7 +32,10 @@ const professionalSchema = new mongoose.Schema(
           type: Boolean,
           default: false,
         },
-        description: String,
+        description: {
+          type: String,
+          trim: true,
+        },
         createdAt: {
           type: Date,
           default: Date.now,
@@ -41,9 +47,16 @@ const professionalSchema = new mongoose.Schema(
         school: {
           type: String,
           required: true,
+          trim: true,
         },
-        degree: String,
-        field: String,
+        degree: {
+          type: String,
+          trim: true,
+        },
+        field: {
+          type: String,
+          trim: true,
+        },
         from: {
           type: Date,
           required: true,
@@ -52,12 +65,18 @@ const professionalSchema = new mongoose.Schema(
           type: Date,
           required: true,
         },
-        grade: String,
+        grade: {
+          type: String,
+          trim: true,
+        },
         current: {
           type: Boolean,
           default: false,
         },
-        description: String,
+        description: {
+          type: String,
+          trim: true,
+        },
         createdAt: {
           type: Date,
           default: Date.now,
@@ -74,12 +93,17 @@ const professionalSchema = new mongoose.Schema(
         title: {
           type: String,
           required: true,
+          trim: true,
         },
         name: {
           type: String,
           required: true,
+          trim: true,
         },
-        description: String,
+        description: {
+          type: String,
+          trim: true,
+        },
         links: [String],
         from: {
           type: Date,

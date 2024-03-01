@@ -5,7 +5,7 @@ const Courses = require("../models/courses");
 const updateCourse = async (req, res) => {
   const { failed, success } = new Response(res);
   const id = req.data.id;
-  const code = req.body.code;
+  const code = req.body.code.replace(/ +/, "");
   const title = req.body.title;
   const description = req.body.description || null;
   const credits = req.body.credits;

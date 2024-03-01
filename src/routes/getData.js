@@ -1,4 +1,5 @@
 const Courses = require("../models/courses");
+const staffPipeline = require("../models/pipelines/staffPipeline");
 const Professionals = require("../models/professionals");
 const Schools = require("../models/schools");
 const Users = require("../models/users");
@@ -26,11 +27,8 @@ const getData = async (req, res) => {
       data.courses = coursesData.map((course) => course.toObject());
 
       // get lecturers
-      const staffsData = await Users.find({
-        school: userData.school,
-        role: "staff",
-      });
-      data.staffs = staffsData.map((staff) => staff.toObject());
+      const staffsData = await Users.aggregate(staffPipeline);
+      data.staffs = staffsData;
     }
 
     if (userData.role === "staff") {

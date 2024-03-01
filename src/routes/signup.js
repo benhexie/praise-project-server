@@ -28,7 +28,7 @@ const signup = async (req, res) => {
 
   const auth = getAuth(app);
   try {
-    if (role === "teacher") {
+    if (role === "staff") {
       const schoolData = await Schools.findOne({ token, _id: name });
       if (!schoolData)
         return failed(
@@ -50,7 +50,7 @@ const signup = async (req, res) => {
       school = schoolData._id;
     }
 
-    role = role === "school" ? "admin" : "user";
+    role = role === "school" ? "admin" : "staff";
     await Users.create({
       email,
       password,

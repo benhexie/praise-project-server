@@ -26,10 +26,10 @@ const addCourse = async (req, res) => {
     };
 
     const course = new Courses(courseData);
-    await course.save();
-    return success("Course added", "Course added", 201);
+    const newCourse = await course.save();
+    return success("Course added", newCourse);
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
     return failed("Internal server error", "Internal server error", 500);
   }
 };

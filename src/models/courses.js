@@ -10,6 +10,7 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    uppercase: true,
   },
   title: {
     type: String,

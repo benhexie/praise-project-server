@@ -1,6 +1,7 @@
 const Response = require("../utils/response");
 const Users = require("../models/users");
 const Courses = require("../models/courses");
+const createNotification = require("../utils/createNotification");
 
 const updateCourse = async (req, res) => {
   const { failed, success } = new Response(res);
@@ -30,6 +31,12 @@ const updateCourse = async (req, res) => {
       courseData,
       { new: true },
     );
+
+    if (assignedTo)
+      await createNotification({
+        message: `You have been assigned to ${code}`,
+        user: assignedTo,
+      });
 
     if (!course) return failed("Course not found", "Course not found", 404);
     return success("Course updated", course, 200);

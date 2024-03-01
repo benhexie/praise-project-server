@@ -1,4 +1,5 @@
 const Courses = require("../models/courses");
+const Notifications = require("../models/notifications");
 const staffPipeline = require("../models/pipelines/staffPipeline");
 const Professionals = require("../models/professionals");
 const Schools = require("../models/schools");
@@ -20,6 +21,12 @@ const getData = async (req, res) => {
     const schoolData = await Schools.findOne({ _id: userData.school });
     if (!schoolData) return failed("School not found", "School not found", 404);
     data.school = schoolData.toObject();
+
+    // get notifications
+    const notificationsData = await Notifications.find({ user: id });
+    data.notifications = notificationsData.map((notification) =>
+      notification.toObject(),
+    );
 
     if (userData.role === "admin") {
       // get courses

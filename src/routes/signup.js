@@ -8,6 +8,7 @@ const {
 } = require("firebase/auth");
 const Response = require("../utils/response");
 const Schools = require("../models/schools");
+const createNotification = require("../utils/createNotification");
 
 const app = initializeApp(firebaseConfig);
 
@@ -34,7 +35,7 @@ const signup = async (req, res) => {
         return failed(
           "School not found",
           "You don't have access to this school",
-          404
+          404,
         );
     }
 
@@ -60,6 +61,13 @@ const signup = async (req, res) => {
       school,
       token,
     });
+
+    if (role === "staff")
+      await createNotification({
+        message: `New staff ${email} has been added`,
+        user: school,
+      });
+
     await sendEmailVerification(auth.currentUser);
     success("Please check your email for verification", {});
   } catch (err) {

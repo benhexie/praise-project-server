@@ -1,5 +1,6 @@
 const Courses = require("../models/courses");
 const Users = require("../models/users");
+const createNotification = require("../utils/createNotification");
 const Response = require("../utils/response");
 
 const addCourse = async (req, res) => {
@@ -27,6 +28,13 @@ const addCourse = async (req, res) => {
 
     const course = new Courses(courseData);
     const newCourse = await course.save();
+
+    if (assignedTo)
+      await createNotification({
+        message: `You have been assigned to ${code}`,
+        user: assignedTo,
+      });
+
     return success("Course added", newCourse);
   } catch (error) {
     console.error(error.message);

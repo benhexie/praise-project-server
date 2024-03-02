@@ -6,7 +6,11 @@ const unassignCourse = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const course = await Courses.updateOne({ _id: id }, { assignedTo: null });
+    const course = await Courses.findByIdAndUpdate(
+      id,
+      { assignedTo: null },
+      { new: true },
+    );
     if (!course) return failed("Course not found", "Course not found", 404);
     return success("Course unassigned", course);
   } catch (error) {

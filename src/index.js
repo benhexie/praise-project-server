@@ -21,6 +21,8 @@ const { forgotPassword } = require("./routes/forgotPassword");
 const { disableUser } = require("./routes/disableUser");
 const { deleteCourse } = require("./routes/deleteCourse");
 const { readNotifications } = require("./routes/readNotifications");
+const { grantViewer } = require("./routes/grantViewer");
+const { unassignCourse } = require("./routes/unassignCourse");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -58,6 +60,8 @@ app.put("/course", authToken, verifyAdmin, updateCourse);
 app.patch("/user/image", upload.single("image"), authToken, updateUserImage);
 app.patch("/user/:id", authToken, verifyAdmin, disableUser);
 app.patch("/notifications", authToken, readNotifications);
+app.patch("/grant/viewer/:id", authToken, verifyAdmin, grantViewer);
+app.patch("/course/unassign/:id", authToken, verifyAdmin, unassignCourse);
 
 // DELETE
 app.delete("/course/:id", authToken, verifyAdmin, deleteCourse);

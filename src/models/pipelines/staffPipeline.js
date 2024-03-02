@@ -2,7 +2,7 @@ const staffPipeline = [
   // Match users with role "staff"
   {
     $match: {
-      role: "staff",
+      $or: [{ role: "staff" }, { role: "viewer" }],
     },
   },
   // Lookup education, experience, and catalog documents

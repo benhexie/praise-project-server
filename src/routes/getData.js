@@ -28,7 +28,7 @@ const getData = async (req, res) => {
       notification.toObject(),
     );
 
-    if (userData.role === "admin") {
+    if (userData.role === "admin" || userData.role === "viewer") {
       // get courses
       const coursesData = await Courses.find({ school: userData.school });
       data.courses = coursesData.map((course) => course.toObject());
@@ -38,14 +38,14 @@ const getData = async (req, res) => {
       data.staffs = staffsData;
     }
 
-    if (userData.role === "staff") {
+    if (userData.role === "staff" || userData.role === "viewer") {
       // get portfolio
       const professionalData = await Professionals.findOne({ user: id });
       data.professional = professionalData?.toObject() || {};
 
       // get assigned courses
       const coursesData = await Courses.find({ assignedTo: id });
-      data.courses = coursesData.map((course) => course.toObject());
+      data.assignedCourses = coursesData.map((course) => course.toObject());
     }
 
     return success("User data retrieved successfully", data);

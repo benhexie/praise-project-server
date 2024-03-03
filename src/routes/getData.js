@@ -41,7 +41,7 @@ const getData = async (req, res) => {
     if (userData.role === "staff" || userData.role === "viewer") {
       // get portfolio
       const professionalData = await Professionals.findOne({ user: id });
-      data.professional = professionalData?.toObject() || {};
+      data.professional = professionalData?.toObject();
 
       // get assigned courses
       const coursesData = await Courses.find({ assignedTo: id });

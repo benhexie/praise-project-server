@@ -23,7 +23,7 @@ const signup = async (req, res) => {
   let school = req.body.school;
   const address = req.body.address;
   let token = req.body.token;
-
+  
   const errors = inputErrors(req.body);
   if (errors.length) return failed("Signup failed", errors.join("\n"));
 
@@ -99,13 +99,13 @@ function inputErrors({
   )
     errors.push("Email is invalid.");
   if (!role) errors.push("Role is required.");
-  if (role && ["teacher", "school"].includes(role) === false)
+  if (role && ["staff", "school"].includes(role) === false)
     errors.push("Role is invalid.");
   if (!password) errors.push("Password is required.");
   if (password && password.length < 8)
     errors.push("Password must be at least 8 characters.");
-  if (role === "teacher" && !school) errors.push("School is required.");
-  if (role === "teacher" && !token) errors.push("Token is required.");
+  if (role === "staff" && !school) errors.push("School is required.");
+  if (role === "staff" && !token) errors.push("Token is required.");
   if (role === "school" && !school) errors.push("School is required.");
   if (role === "school" && !address) errors.push("Address is required.");
   return errors;

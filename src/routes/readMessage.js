@@ -5,11 +5,12 @@ const readMessage = async (req, res) => {
   const { success, failed } = new Response(res);
   const id = req.data.id;
   const messageId = req.params.id;
+  const read = req.body.read;
 
   try {
     const messages = await Messages.findByIdAndUpdate(
       { _id: messageId, receiver: id },
-      { read: true },
+      { read },
       { new: true },
     )
       .populate({

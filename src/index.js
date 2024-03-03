@@ -23,6 +23,10 @@ const { deleteCourse } = require("./routes/deleteCourse");
 const { readNotifications } = require("./routes/readNotifications");
 const { grantViewer } = require("./routes/grantViewer");
 const { unassignCourse } = require("./routes/unassignCourse");
+const { createMessage } = require("./routes/createMessage");
+const { getMessages } = require("./routes/getMessages");
+const { readMessage } = require("./routes/readMessage");
+require("events").EventEmitter.defaultMaxListeners = 20;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,6 +46,7 @@ app.get("/", (req, res) => {
 app.get("/data", authToken, getData);
 app.get("/schools", getSchools);
 app.get("/token", authToken, changeToken);
+app.get("/messages", authToken, verifyAdmin, getMessages);
 
 // POST
 app.post("/auth/signup", signup);
@@ -51,6 +56,7 @@ app.post("/api/profile/experience", authToken, addExperience);
 app.post("/api/profile/education", authToken, addEducation);
 app.post("/api/profile/catalog", upload.single("image"), authToken, addCatalog);
 app.post("/course", authToken, verifyAdmin, addCourse);
+app.post("/message", authToken, createMessage);
 
 // PUT
 app.put("/user", authToken, updateUser);
@@ -62,6 +68,7 @@ app.patch("/user/:id", authToken, verifyAdmin, disableUser);
 app.patch("/notifications", authToken, readNotifications);
 app.patch("/grant/viewer/:id", authToken, verifyAdmin, grantViewer);
 app.patch("/course/unassign/:id", authToken, verifyAdmin, unassignCourse);
+app.patch("/message/:id", authToken, verifyAdmin, readMessage);
 
 // DELETE
 app.delete("/course/:id", authToken, verifyAdmin, deleteCourse);

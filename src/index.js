@@ -41,7 +41,7 @@ const upload = multer({ storage });
 
 // GET
 app.get("/", (req, res) => {
-  res.redirect("https://praise-project.vercel.app/");
+  res.redirect("https://lecturacompany.vercel.app/");
 });
 app.get("/data", authToken, getData);
 app.get("/schools", getSchools);

@@ -7,6 +7,7 @@ const schoolSchema = new mongoose.Schema(
       type: String,
       required: [true, "School name is required"],
       trim: true,
+      lowercase: true,
       unique: true,
     },
     address: {
@@ -36,7 +37,7 @@ const schoolSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Schools = mongoose.model("Schools", schoolSchema);

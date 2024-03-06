@@ -39,6 +39,12 @@ const signup = async (req, res) => {
         );
     }
 
+    if (role === "school") {
+      const schoolData = await Schools.findOne({ name });
+      if (schoolData)
+        return failed("School already exists", "School already exists", 400);
+    }
+
     await createUserWithEmailAndPassword(auth, email, password);
 
     if (role === "school") {
@@ -79,8 +85,6 @@ const signup = async (req, res) => {
       return failed("Signup failed", "Weak password");
     if (err.code === "auth/invalid-password")
       return failed("Signup failed", "Invalid password");
-    if (err.code === 11000)
-      return failed("Signup failed", "School already exists");
     failed("Signup failed", "Something went wrong");
   }
 };

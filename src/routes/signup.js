@@ -23,7 +23,7 @@ const signup = async (req, res) => {
   let school = req.body.school;
   const address = req.body.address;
   let token = req.body.token;
-  
+
   const errors = inputErrors(req.body);
   if (errors.length) return failed("Signup failed", errors.join("\n"));
 
@@ -71,7 +71,17 @@ const signup = async (req, res) => {
     await sendEmailVerification(auth.currentUser);
     success("Please check your email for verification", {});
   } catch (err) {
-    failed("Signup failed", err.message);
+    if (err.code === "auth/email-already-in-use")
+      return failed("Signup failed", "Email already in use");
+    if (err.code === "auth/invalid-email")
+      return failed("Signup failed", "Invalid email");
+    if (err.code === "auth/weak-password")
+      return failed("Signup failed", "Weak password");
+    if (err.code === "auth/invalid-password")
+      return failed("Signup failed", "Invalid password");
+    if (err.code === 11000)
+      return failed("Signup failed", "School already exists");
+    failed("Signup failed", "Something went wrong");
   }
 };
 

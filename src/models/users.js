@@ -37,12 +37,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Token is required"],
     },
-    password: {
-      type: String,
-      required: [true, "Password is required"],
-      minlength: [8, "Password must be at least 8 characters long"],
-      trim: true,
-    },
     age: {
       type: Number,
       min: 18,

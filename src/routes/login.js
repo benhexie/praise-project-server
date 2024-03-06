@@ -25,16 +25,13 @@ const login = async (req, res) => {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       userData.email,
-      password
+      password,
     );
     const user = userCredential.user;
     if (!user.emailVerified)
       return failed("Login failed", "Please verify your email", 400);
 
-    await Users.updateOne(
-      { _id: userData._id },
-      { lastLogin: Date.now(), password }
-    );
+    await Users.updateOne({ _id: userData._id }, { lastLogin: Date.now() });
     return success("User logged in", {
       token: genToken({ id: userData._id }),
     });

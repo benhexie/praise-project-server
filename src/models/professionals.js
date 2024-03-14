@@ -90,11 +90,6 @@ const professionalSchema = new mongoose.Schema(
           enum: ["project", "publication", "patent"],
           required: true,
         },
-        title: {
-          type: String,
-          required: true,
-          trim: true,
-        },
         name: {
           type: String,
           required: true,

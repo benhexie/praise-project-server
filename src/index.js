@@ -26,6 +26,7 @@ const { unassignCourse } = require("./routes/unassignCourse");
 const { createMessage } = require("./routes/createMessage");
 const { getMessages } = require("./routes/getMessages");
 const { readMessage } = require("./routes/readMessage");
+const { deletePortfolioItem } = require("./routes/deletePortfolioItem");
 require("events").EventEmitter.defaultMaxListeners = 20;
 
 const app = express();
@@ -72,6 +73,7 @@ app.patch("/message/:id", authToken, verifyAdmin, readMessage);
 
 // DELETE
 app.delete("/course/:id", authToken, verifyAdmin, deleteCourse);
+app.delete("/api/portfolio/:category/:id", authToken, deletePortfolioItem);
 
 const listener = app.listen(PORT, () => {
   console.log(`Server is running on port ${listener.address().port}`);

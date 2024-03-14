@@ -34,7 +34,12 @@ const getData = async (req, res) => {
       data.courses = coursesData.map((course) => course.toObject());
 
       // get lecturers
-      const staffsData = await Users.aggregate(staffPipeline);
+      const staffsData = (await Users.aggregate(staffPipeline)).map((staff) => {
+        staff.experience = staff.experience.pop();
+        staff.education = staff.education.pop();
+        staff.catalog = staff.catalog.pop();
+        return staff;
+      });
       data.staffs = staffsData;
     }
 

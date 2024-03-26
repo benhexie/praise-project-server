@@ -53,6 +53,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    maxCredits: {
+      type: Number,
+      default: 15,
+    },
   },
   {
     timestamps: true,
